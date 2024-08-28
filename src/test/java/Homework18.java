@@ -1,15 +1,22 @@
 public class Homework18 extends BaseTest {
 
   public void playNextSong {
-    WebElement play = driver.findElement(By.cssSelector("[title='Play or resume']"));
-    play.click();
+    WebElement skip = driver.findElement(By.cssSelector("[title='Play next song']"));
+    skip.click();
   }
     
-  public void verifySongPlaying {
-  assert data-testid="pause-btn"
-    
+  public void verifyPlay {
+    WebElement buttonPlayPause = driver.findElement(By.xpath([@id="mainFooter"]/div[1]/span/span[2]);
+    String actualMessage = buttonPlayPause.getText();
+    Assert.assertTrue(actualMessage.contains("Pause"));
+  }
 
     @Test
   public void playSong() throws InterruptedException {
-    [title="Play or resume"]
+    playNextSong();
+    verifyPlay();
+  }
+}
+    
+    
     
