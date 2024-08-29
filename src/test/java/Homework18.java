@@ -1,20 +1,26 @@
-public class Homework18 extends BaseTest {
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
-  public void playNextSong {
-    WebElement skip = driver.findElement(By.cssSelector("[title='Play next song']"));
-    skip.click();
-  }
-    
-  public void verifyPlay {
-    WebElement buttonPlayPause = driver.findElement(By.xpath([@id="mainFooter"]/div[1]/span/span[2]);
-    String actualMessage = buttonPlayPause.getText();
-    Assert.assertTrue(actualMessage.contains("Pause"));
-  }
+public class Homework18 extends BaseTest {
+  WebElement driver;
 
     @Test
   public void playSong() throws InterruptedException {
     playNextSong();
     verifyPlay();
+  }
+
+  private void verifyPlay() {
+    WebElement buttonPlayPause = driver.findElement(By.cssSelector(#mainFooter > div.side.player-controls > span > span.pause));
+    String actualMessage = buttonPlayPause.getText();
+    Assert.assertTrue(actualMessage.contains("Pause"));
+  }
+
+  private void playNextSong() {
+    WebElement skip = driver.findElement(By.cssSelector("[title='Play next song']"));
+    skip.click();
   }
 }
     
