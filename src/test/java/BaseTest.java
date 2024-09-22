@@ -8,10 +8,12 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
 import java.time.Duration;
+import java.time.Instant;
 
 public class BaseTest {
     WebDriver driver;
@@ -19,7 +21,7 @@ public class BaseTest {
     private String password;
     private String song;
     String url = "https://qa.koel.app/";
-    WebDriver wait;
+    WebDriverWait wait;
 
     public void verifyPlay() {
         WebElement soundbar = driver.findElement(By.cssSelector("div[data-testid='sound-bar-play']"));
@@ -100,21 +102,20 @@ public class BaseTest {
 
 
     public void createPlaylist() throws InterruptedException {
-        Thread.sleep(2000);
-        WebElement createPlaylistButton = driver.findElement(By.cssSelector("[data-testid=\"sidebar-create-playlist-btn\"]"));
+        WebElement createPlaylistButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid=\"sidebar-create-playlist-btn\"]")));
         createPlaylistButton.click();
-        WebElement newPlaylistButton = driver.findElement(By.cssSelector("[data-testid='playlist-context-menu-create-simple']"));
+        WebElement newPlaylistButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='playlist-context-menu-create-simple']")));
         newPlaylistButton.click();
-        WebElement newPlaylistName = driver.findElement(By.cssSelector("#playlists > form > input[type=text]"));
+        WebElement newPlaylistName = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#playlists > form > input[type=text]")));
         newPlaylistName.clear();
         newPlaylistName.sendKeys("Homework");
         newPlaylistName.sendKeys(Keys.ENTER);
     }
 
     public void deleteFirstPlaylist() {
-        WebElement firstPlaylist = driver.findElement(By.cssSelector("[class=\"playlist playlist\"]"));
+        WebElement firstPlaylist = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class=\"playlist playlist\"]")));
         firstPlaylist.click();
-        WebElement deletePlaylistButton = driver.findElement(By.cssSelector("[class=\"del btn-delete-playlist\"]"));
+        WebElement deletePlaylistButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class=\"del btn-delete-playlist\"]")));
         deletePlaylistButton.click();
     }
 
@@ -128,6 +129,8 @@ public class BaseTest {
         driver.get(url);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
+
+        wait = new WebDriverWait(driver, Duration.ofSeconds(4));
     }
 
 
