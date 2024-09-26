@@ -5,15 +5,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
 import java.time.Duration;
-import java.time.Instant;
 
 public class BaseTest {
     WebDriver driver;
@@ -102,6 +101,7 @@ public class BaseTest {
 
 
     public void createPlaylist() throws InterruptedException {
+        Thread.sleep(2000); // Hardcoded delay to allow webpage to fully load
         WebElement createPlaylistButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid=\"sidebar-create-playlist-btn\"]")));
         createPlaylistButton.click();
         WebElement newPlaylistButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='playlist-context-menu-create-simple']")));
@@ -119,6 +119,17 @@ public class BaseTest {
         deletePlaylistButton.click();
     }
 
+    public void renameFirstPlaylist() {
+        Actions a = new Actions(driver);
+        WebElement firstPlaylist = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class=\"playlist playlist\"]")));
+        a.doubleClick(firstPlaylist).perform();
+        WebElement firstPlaylistName = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class=\"playlist playlist editing\"]")));
+        firstPlaylistName.clear();
+        firstPlaylistName.sendKeys("Homework21");
+        firstPlaylistName.sendKeys(Keys.ENTER);
+    }
+
+
     @BeforeMethod
     public void initBrowser() throws InterruptedException {
 
@@ -129,6 +140,7 @@ public class BaseTest {
         driver.get(url);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
+
 
         wait = new WebDriverWait(driver, Duration.ofSeconds(4));
     }
