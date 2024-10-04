@@ -8,13 +8,13 @@ public class Homework21 extends BaseTest {
         login();
         createPlaylist();
         renameFirstPlaylist();
-//        deleteFirstPlaylist();
+        deleteFirstPlaylist();
     }
 
-//    @AfterTest
-//    public void tearDown() {
-//        if (driver != null) {
-//            driver.quit();
-//        }
-//    }
+    @AfterTest
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
 }

@@ -123,8 +123,8 @@ public class BaseTest {
         Actions a = new Actions(driver);
         WebElement firstPlaylist = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class=\"playlist playlist\"]")));
         a.doubleClick(firstPlaylist).perform();
-        WebElement firstPlaylistName = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class=\"playlist playlist editing\"]")));
-        firstPlaylistName.clear();
+        WebElement firstPlaylistName = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid=\"inline-playlist-name-input\"]")));
+        firstPlaylistName.sendKeys(Keys.chord(Keys.CONTROL,"A",Keys.BACK_SPACE));
         firstPlaylistName.sendKeys("Homework21");
         firstPlaylistName.sendKeys(Keys.ENTER);
     }
