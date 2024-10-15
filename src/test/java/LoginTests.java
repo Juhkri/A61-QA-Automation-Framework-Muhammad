@@ -33,6 +33,19 @@ public class LoginTests extends BaseTest {
         Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
     }
 
+    @Test
+    public void positiveLoginTestPF() throws InterruptedException {
+        LoginPage loginPage = new LoginPage(driver);
+        HomePage homePage = new HomePage(driver);
+
+        // Login
+        loginPage.provideEmailPF("kristofer.juhasz@testpro.io");
+        loginPage.providePasswordPF("Logintest1!");
+        loginPage.clickSubmitBtnPF();
+
+        Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
+    }
+
 //    @AfterTest
 //    public void tearDown() {
 //        if (driver != null) {
