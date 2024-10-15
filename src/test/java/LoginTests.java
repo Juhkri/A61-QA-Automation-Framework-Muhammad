@@ -1,3 +1,5 @@
+import Pages.HomePage;
+import Pages.LoginPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,6 +18,33 @@ public class LoginTests extends BaseTest {
     loginButton();
     Assert.assertEquals(driver.getCurrentUrl(),"https://qa.koel.app/");
 }
+
+    // Login Test using POM
+
+    @Test
+    public void positiveLoginTest(){
+        LoginPage loginPage = new LoginPage(driver);
+        HomePage homePage = new HomePage(driver);
+
+        loginPage.provideEmail("kristofer.juhasz@testpro.io");
+        loginPage.providePassword("Logintest1!");
+        loginPage.clickSubmit();
+
+        Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
+    }
+
+    @Test
+    public void positiveLoginTestPF() throws InterruptedException {
+        LoginPage loginPage = new LoginPage(driver);
+        HomePage homePage = new HomePage(driver);
+
+        // Login
+        loginPage.provideEmailPF("kristofer.juhasz@testpro.io");
+        loginPage.providePasswordPF("Logintest1!");
+        loginPage.clickSubmitBtnPF();
+
+        Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
+    }
 
 //    @AfterTest
 //    public void tearDown() {
