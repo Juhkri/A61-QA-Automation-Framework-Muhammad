@@ -9,12 +9,16 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.time.Duration;
 
 public class BaseTest {
@@ -132,7 +136,11 @@ public class BaseTest {
         firstPlaylistName.sendKeys(Keys.ENTER);
     }
 
-    public static WebDriver pickBrowser(String browserName){
+    public static WebDriver pickBrowser(String browserName) throws MalformedURLException {
+
+        DesiredCapabilities caps = new DesiredCapabilities();
+        String gridUrl = "http://26.61.194.212:4444";
+
         switch (browserName){
             case "firefox":
                 WebDriverManager.firefoxdriver().setup();
@@ -142,6 +150,17 @@ public class BaseTest {
                 EdgeOptions edgeOptions = new EdgeOptions();
                 edgeOptions.addArguments("--remote-allow-origins=*");
                 return driver = new EdgeDriver();
+
+            // Grid Browsers
+            case "grid-edge":
+                caps.setCapability("browserName", "microsoft edge");
+                return driver = new RemoteWebDriver(URI.create(gridUrl).toURL(),caps);
+            case "grid-firefox":
+                caps.setCapability("browserName", "firefox");
+                return driver = new RemoteWebDriver(URI.create(gridUrl).toURL(),caps);
+            case "grid-chrome":
+                caps.setCapability("browserName", "chrome");
+                return driver = new RemoteWebDriver(URI.create(gridUrl).toURL(),caps);
             default:
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions chromeOptions = new ChromeOptions();
@@ -152,7 +171,7 @@ public class BaseTest {
 
 
     @BeforeMethod
-    public void initBrowser() throws InterruptedException {
+    public void initBrowser() throws MalformedURLException {
 
 //      Added ChromeOptions argument below to fix websocket error
         //ChromeOptions options = new ChromeOptions();
