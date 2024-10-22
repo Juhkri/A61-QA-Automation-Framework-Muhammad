@@ -14,12 +14,13 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.*;
 
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URL;
 import java.time.Duration;
+import java.util.HashMap;
 
 public class BaseTest {
     static WebDriver driver;
@@ -28,6 +29,12 @@ public class BaseTest {
     private String song;
     String url = "https://qa.koel.app/";
     WebDriverWait wait;
+
+    private static final ThreadLocal<WebDriver> threadDriver = new ThreadLocal<>();
+
+    public static WebDriver getDriver() {
+        return threadDriver.get();
+    }
 
     public void verifyPlay() {
         WebElement soundbar = driver.findElement(By.cssSelector("div[data-testid='sound-bar-play']"));
@@ -136,7 +143,24 @@ public class BaseTest {
         firstPlaylistName.sendKeys(Keys.ENTER);
     }
 
-    public static WebDriver pickBrowser(String browserName) throws MalformedURLException {
+    public WebDriver lambdaTest() throws MalformedURLException {
+        String hubUrl = "https://hub.lambdatest.com/wd/hub";
+
+        ChromeOptions browserOptions = new ChromeOptions();
+        browserOptions.setPlatformName("Windows 10");
+        browserOptions.setBrowserVersion("129");
+        HashMap<String, Object> ltOptions = new HashMap<String, Object>();
+        ltOptions.put("username", "juhkri");
+        ltOptions.put("accessKey", "plHLrwS0YOniwTgtHkq9rohX4ZBdDTq6clfYyQbAX966m079Cc");
+        ltOptions.put("project", "Untitled");
+        ltOptions.put("selenium_version", "4.0.0");
+        ltOptions.put("w3c", true);
+        browserOptions.setCapability("LT:Options", ltOptions);
+
+        return new RemoteWebDriver(new URL(hubUrl), browserOptions);
+    }
+
+    public WebDriver pickBrowser(String browserName) throws MalformedURLException {
 
         DesiredCapabilities caps = new DesiredCapabilities();
         String gridUrl = "http://26.61.194.212:4444";
@@ -161,6 +185,8 @@ public class BaseTest {
             case "grid-chrome":
                 caps.setCapability("browserName", "chrome");
                 return driver = new RemoteWebDriver(URI.create(gridUrl).toURL(),caps);
+            case "cloud":
+                return lambdaTest();
             default:
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions chromeOptions = new ChromeOptions();
@@ -171,19 +197,34 @@ public class BaseTest {
 
 
     @BeforeMethod
-    public void initBrowser() throws MalformedURLException {
+    @Parameters({"BaseURL"})
+    public void setBrowser(String baseURL) throws MalformedURLException {
+        threadDriver.set(driver = pickBrowser(System.getProperty("browser")));
+        getDriver().get(url);
+        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        getDriver().manage().window().maximize();
+//        wait = new WebDriverWait((WebDriver) threadDriver, Duration.ofSeconds(4));
+    }
+
+//    public void initBrowser() throws MalformedURLException {
 
 //      Added ChromeOptions argument below to fix websocket error
         //ChromeOptions options = new ChromeOptions();
         //options.addArguments("--remote-allow-origins=*");
         //driver = new ChromeDriver(options);
-        driver = pickBrowser(System.getProperty("browser"));
-        driver.get(url);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().window().maximize();
+//        driver = pickBrowser(System.getProperty("browser"));
+//        driver.get(url);
+//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//        driver.manage().window().maximize();
 
+//
+//        wait = new WebDriverWait(driver, Duration.ofSeconds(4));
+//    }
 
-        wait = new WebDriverWait(driver, Duration.ofSeconds(4));
+    @AfterMethod
+    public void tearDown() {
+        threadDriver.get().close();
+        threadDriver.remove();
     }
 
 
