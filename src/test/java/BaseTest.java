@@ -32,6 +32,11 @@ public class BaseTest {
 
     private static final ThreadLocal<WebDriver> threadDriver = new ThreadLocal<>();
 
+    public void waitInitialize(WebDriver driver) {
+        BaseTest.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Initialize here
+    }
+
     public static WebDriver getDriver() {
         return threadDriver.get();
     }
@@ -48,7 +53,7 @@ public class BaseTest {
     }
 
     public void playNextSong() {
-        WebElement skip = this.driver.findElement(By.cssSelector("i[data-testid='play-next-btn']"));
+        WebElement skip = driver.findElement(By.cssSelector("i[data-testid='play-next-btn']"));
         skip.click();
     }
 
@@ -115,7 +120,6 @@ public class BaseTest {
 
 
     public void createPlaylist() throws InterruptedException {
-        Thread.sleep(2000); // Hardcoded delay to allow webpage to fully load
         WebElement createPlaylistButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid=\"sidebar-create-playlist-btn\"]")));
         createPlaylistButton.click();
         WebElement newPlaylistButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='playlist-context-menu-create-simple']")));
