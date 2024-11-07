@@ -7,7 +7,18 @@
         <classes>
             <class name="LoginTests"/>
             <class name="AnyPageTests"/>
-            <!--<class name="CucumberRunner"/>-->
+            <class name="CucumberRunner"/>
          </classes>
+    </test>
+    <test name="Smoke Test" preserve-order="false">
+        <classes>
+        <class name="SmokeTest"/>
+        </classes>
+    </test>
+    <test name="Regression Test" preserve-order="false">
+        <classes>
+            <class name="RegressionTest"/>
+            <class name="CucumberRunner"/>
+        </classes>
     </test>
 </suite>
