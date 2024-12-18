@@ -13,10 +13,15 @@ public class HomePage extends BasePage {
     // Elements
 
     By userAvatarIcon = By.cssSelector("img.avatar");
+    By logo = By.cssSelector("[class='logo']");
 
     // Helper Methods
 
     public WebElement getUserAvatar(){
         return findElement(userAvatarIcon);
+    }
+
+    public WebElement getLogo(){
+        return findElement(logo);
     }
 }

@@ -28,6 +28,8 @@ public class LoginTests extends BaseTest {
         Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
     }
 
+
+
 //     Login Test using PF
 
 //    @Test

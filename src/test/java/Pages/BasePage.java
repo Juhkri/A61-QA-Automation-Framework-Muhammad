@@ -30,9 +30,6 @@ public class BasePage {
     protected WebDriver driver;
     protected WebDriverWait wait;
     protected Actions actions;
-    private String email;
-    private String password;
-    private String song;
 
     public BasePage(WebDriver givenDriver){
         driver = givenDriver;
@@ -66,6 +63,13 @@ public class BasePage {
     By successMessage = By.cssSelector("div.success.show");
     By homePage = By.cssSelector("[class=\"home active\"]");
     By confirmationOk = By.cssSelector("[class=\"ok\"]");
+    By logout = By.cssSelector("[class=\"fa fa-sign-out\"]");
+    By registration = By.cssSelector("[href='registration']");
+    By email = By.cssSelector("[type='email']");
+    By password = By.cssSelector("[type='password']");
+    By submit = By.cssSelector("[type='submit']");
+    By message = By.cssSelector("[class='messages']");
+
 
     // Helper Methods
 
@@ -108,6 +112,26 @@ public class BasePage {
     public WebElement getConfirmationOk(){
         return findElement(confirmationOk);
     }
+    public WebElement getLogout(){
+        return findElement(logout);
+    }
+    public WebElement getRegistration(){
+        return findElement(registration);
+    }
+    public WebElement getEmail(){
+        return findElement(email);
+    }
+    public WebElement getPassword(){
+        return findElement(password);
+    }
+    public WebElement getSubmit() {
+        return findElement(submit);
+    }
+    public WebElement getMessage() {
+        return findElement(message);
+    }
+
+
 
     // Methods
 
@@ -175,6 +199,11 @@ public class BasePage {
         firstPlaylistName.sendKeys("RenamePlaylistTest");
         firstPlaylistName.sendKeys(Keys.ENTER);
     }
+
+    public void logout() {
+        getLogout().click();
+    }
+
 
     public WebDriver lambdaTest() throws MalformedURLException {
         String hubUrl = "https://hub.lambdatest.com/wd/hub";

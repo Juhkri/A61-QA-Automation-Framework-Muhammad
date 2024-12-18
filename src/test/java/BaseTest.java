@@ -24,8 +24,8 @@ import java.util.HashMap;
 
 public class BaseTest {
     static WebDriver driver;
-    private String email;
-    private String password;
+    private String emailLegacy;
+    private String passwordLegacy;
     private String song;
     String url = "https://qa.koel.app/";
     WebDriverWait wait;
@@ -58,20 +58,20 @@ public class BaseTest {
     }
 
     public void setEmailPassword(String email, String password) {
-        this.email = email;
-        this.password = password;
+        this.emailLegacy = email;
+        this.passwordLegacy = password;
     }
 
     public void inputEmail() {
         WebElement emailField = driver.findElement(By.cssSelector("input[type='email']"));
         emailField.clear();
-        emailField.sendKeys(this.email);
+        emailField.sendKeys(this.emailLegacy);
     }
 
     public void inputPassword() {
         WebElement passwordField = driver.findElement(By.cssSelector("input[type='password']"));
         passwordField.clear();
-        passwordField.sendKeys(this.password);
+        passwordField.sendKeys(this.passwordLegacy);
     }
 
     public void loginButton() {
@@ -225,7 +225,7 @@ public class BaseTest {
 //        wait = new WebDriverWait(driver, Duration.ofSeconds(4));
 //    }
 
-    @AfterMethod
+    //@AfterMethod
     public void tearDown() {
         threadDriver.get().close();
         threadDriver.remove();
