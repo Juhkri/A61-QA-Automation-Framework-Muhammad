@@ -225,7 +225,7 @@ public class BaseTest {
 //        wait = new WebDriverWait(driver, Duration.ofSeconds(4));
 //    }
 
-    //@AfterMethod
+    @AfterMethod
     public void tearDown() {
         threadDriver.get().close();
         threadDriver.remove();
