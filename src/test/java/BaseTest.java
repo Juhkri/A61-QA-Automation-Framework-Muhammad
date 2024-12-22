@@ -199,6 +199,19 @@ public class BaseTest {
         }
     }
 
+    public int extractNumberFromXPath(String xpath) {
+        // Locate the element using the given XPath
+        WebElement element = driver.findElement(By.xpath(xpath));
+
+        // Get the text content of the element
+        String text = element.getText();
+
+        // Extract the number using regex
+        String number = text.replaceAll("[^0-9]", ""); // Keeps only digits
+
+        // Convert to integer and return the result
+        return Integer.parseInt(number);
+    }
 
     @BeforeMethod
     @Parameters({"BaseURL"})
@@ -225,7 +238,7 @@ public class BaseTest {
 //        wait = new WebDriverWait(driver, Duration.ofSeconds(4));
 //    }
 
-    @AfterMethod
+    //@AfterMethod
     public void tearDown() {
         threadDriver.get().close();
         threadDriver.remove();

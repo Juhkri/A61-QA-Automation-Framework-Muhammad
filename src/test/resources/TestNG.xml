@@ -9,6 +9,7 @@
             <class name="AnyPageTests"/>
             <class name="CucumberRunner"/>
             <class name="Sprint1_CreateNewAccount"/>
+            <class name="Sprint2_Favorites"/>
          </classes>
     </test>
     <test name="Smoke Test" preserve-order="false">
