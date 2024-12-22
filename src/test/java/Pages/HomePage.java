@@ -14,6 +14,7 @@ public class HomePage extends BasePage {
 
     By userAvatarIcon = By.cssSelector("img.avatar");
     By logo = By.cssSelector("[class='logo']");
+    By frown = By.cssSelector("[class=\"fa fa-frown-o\"]");
 
     // Helper Methods
 
@@ -23,5 +24,9 @@ public class HomePage extends BasePage {
 
     public WebElement getLogo(){
         return findElement(logo);
+    }
+
+    public WebElement getFrown(){
+        return findElement(frown);
     }
 }
