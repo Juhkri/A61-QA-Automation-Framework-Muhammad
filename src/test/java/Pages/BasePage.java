@@ -69,6 +69,8 @@ public class BasePage {
     By password = By.cssSelector("[type='password']");
     By submit = By.cssSelector("[type='submit']");
     By message = By.cssSelector("[class='messages']");
+    By favorites = By.cssSelector("[class=\"playlist favorites\"]");
+    By downloadAll = By.cssSelector("[class=\"download\"]");
 
 
     // Helper Methods
@@ -129,6 +131,12 @@ public class BasePage {
     }
     public WebElement getMessage() {
         return findElement(message);
+    }
+    public WebElement getFavorites() {
+        return findElement(favorites);
+    }
+    public WebElement getDownloadAll() {
+        return findElement(downloadAll);
     }
 
 
@@ -256,5 +264,6 @@ public class BasePage {
                 return driver = new ChromeDriver(chromeOptions);
         }
     }
+
 
 }
